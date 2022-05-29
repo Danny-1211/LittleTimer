@@ -18,15 +18,28 @@
       </div>
       <div class="col-sm-5 border rounded-3 bg-light py-2">
         <h3 class="font-family-today text-dark px-2">Today</h3> <!--今天標題-->
-        <ul class="list-group rounded-3">  <!--任務清單-->
-          <li class="list-group-item border-bottom border-light border-3 ">
-            <button class="btn font-family-list text-dark">任務一</button>
-          </li>
-          <li class="list-group-item border-bottom border-light border-3 py-2 font-family-list text-dark">
-            <button class="btn font-family-list text-dark">任務二</button>
+        <ul class="list-group rounded-3" v-for="item in localData" :key="item.name + '123123'">  <!--任務清單-->
+          <li class="list-group-item border-bottom border-light border-3">
+            <div class=" font-family-list text-dark p-2">{{ item.name }}</div> <!--跑不出物件任務名稱-->
           </li>
         </ul>
       </div>
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  data () {
+    return {
+      localData: []
+    };
+  },
+  mounted () {
+    const localList = JSON.parse(localStorage.getItem('quest')); // 將 localstorage 儲存的資料抓出來， JSON.parse 轉換成原本格式 陣列包物件
+    localList.forEach(element => { // 實體化時把他陣列元素放到 dataArr 陣列
+      this.localData.push(element);
+    });
+  }
+};
+</script>

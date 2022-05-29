@@ -1,6 +1,6 @@
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="64" height="64" viewBox="0,0,64,64">
-	<desc>add_circle_outline icon - Licensed under Apache License v2.0 (http://www.apache.org/licenses/LICENSE-2.0) - Created with Iconfu.com - Derivative work of Material icons (Copyright Google Inc.)</desc>
+	<desc>add icon - Licensed under Apache License v2.0 (http://www.apache.org/licenses/LICENSE-2.0) - Created with Iconfu.com - Derivative work of Material icons (Copyright Google Inc.)</desc>
 	<g fill="#7fc6b2" fill-rule="nonzero" style="mix-blend-mode: normal">
-		<path d="M58.67,32c0,14.72 -11.95,26.67 -26.67,26.67c-14.72,0 -26.67,-11.95 -26.67,-26.67c0,-14.72 11.95,-26.67 26.67,-26.67c14.72,0 26.67,11.95 26.67,26.67zM53.33,32c0,-11.76 -9.57,-21.33 -21.33,-21.33c-11.76,0 -21.33,9.57 -21.33,21.33c0,11.76 9.57,21.33 21.33,21.33c11.76,0 21.33,-9.57 21.33,-21.33zM34.67,29.33h10.67v5.33h-10.67v10.67h-5.33v-10.67h-10.67v-5.33h10.67v-10.67h5.33z"/>
+		<path d="M50.67,34.67h-16v16h-5.33v-16h-16v-5.33h16v-16h5.33v16h16z"/>
 	</g>
 </svg>
