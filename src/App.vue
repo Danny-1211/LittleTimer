@@ -4,7 +4,7 @@
 </template>
 
 <script>
-import HeaderLogo from '@/components/headerLogo.vue';
+import HeaderLogo from '@/components/HeaderLogo.vue';
 export default {
   components: {
     HeaderLogo
