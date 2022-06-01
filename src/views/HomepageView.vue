@@ -14,15 +14,16 @@
           </div>
           <div class="col d-flex justify-content-around"><!--按鈕-->
             <button type="button" class=" border-0 bg-white btn-sm" @click="toggleTimeRunning"><img src="../assets/img/start.svg" alt="start"></button>
-             <button  type="button" class=" border-0 bg-white btn-sm" @click="isClockRunning = !isClockRunning"><img src="../assets/img/pause.svg" alt="stop"></button>
+             <button  type="button" class=" border-0 bg-white btn-sm" @click="toggleTimeStop"><img src="../assets/img/pause.svg" alt="stop"></button>
           </div>
         </div>
       </div>
       <div class="col-sm-5 border rounded-3 bg-light py-2">
         <h3 class="font-family-today text-dark px-2">Today</h3> <!--今天標題-->
         <ul class="list-group rounded-3" v-for="item in localData" :key="item.name + '123123'">  <!--任務清單-->
-          <li class="list-group-item border-bottom border-light border-3">
+          <li class="list-group-item border-bottom border-light border-3 d-flex justify-content-between">
             <div class=" font-family-list text-dark p-2" @click="showInfor(item.name)">{{ item.name }}</div> <!--跑不出物件任務名稱-->
+            <div class=" btn btn-warning text-dark p-2">任務內容</div>
           </li>
         </ul>
       </div>
@@ -31,7 +32,9 @@
 </template>
 
 <script>
+import zero from '@/utils/zero.js';
 export default {
+  mixins: [zero],
   data () {
     return {
       localData: [],
@@ -39,7 +42,8 @@ export default {
       isClockRunning: true,
       showInitTime: '', // 用來渲染時間
       timer: 0, // 計時用的
-      content: ''
+      content: '',
+      remainTime: 0
     };
   },
   methods: {
@@ -50,13 +54,19 @@ export default {
         }
       });
       this.timer = this.currentData.time;
-      this.showInitTime = parseInt((this.timer * 60) / 60) + ':' + (parseInt((this.timer * 60) % 60) === 0 ? '0' + parseInt((this.timer * 60) % 60) : parseInt((this.timer * 60) % 60));
+      this.showInitTime = parseInt((this.timer * 60) / 60) + ':' + (parseInt((this.timer * 60) % 60) < 10 ? `0${parseInt((this.timer * 60) % 60)}` : parseInt((this.timer * 60) % 60));
       clearInterval(this.content);
     },
     toggleTimeRunning () {
       if (this.timer !== 0) {
+        this.isClockRunning = true;
+        let b = 0;
         let deleteArr = []; // 用來記錄跑完行程的資料還有多少
-        let b = this.timer * 60;// 轉換成秒
+        if (this.remainTime === 0) {
+          b = this.timer * 60;// 轉換成秒
+        } else {
+          b = this.remainTime;
+        }
         if (this.isClockRunning) { // 如果是 true
           this.content = window.setInterval(() => {
             b--;
@@ -65,10 +75,10 @@ export default {
             if (seconds < 10) {
               seconds = `0${seconds}`; // 如果秒數是個位數就前面多放一個 0
             }
+            this.remainTime = b;
             this.timer = minutes + ':' + seconds; // 分鐘+秒數
             this.showInitTime = this.timer; // 將這個值給予 showInitTime 渲染
             if (b <= 0) { // 當倒數時間為 0
-              clearInterval(this.content); // 關閉 setInterVal 事件
               this.timer = 0;
               this.showInitTime = '00:00'; // 渲染回到 00:00
               deleteArr = this.localData.filter((item, index) => {
@@ -76,12 +86,19 @@ export default {
               });
               this.localData = deleteArr;
               localStorage.setItem('quest', JSON.stringify(this.localData));
+              this.showAlert();
+              clearInterval(this.content);
             }
           }, 1000);
         }
       } else {
         alert('時間不能為0');
       }
+    },
+    toggleTimeStop () {
+      this.isClockRunning = false;
+      this.timer = this.remainTime;
+      clearInterval(this.content);
     }
   },
   mounted () {
