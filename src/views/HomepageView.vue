@@ -14,7 +14,7 @@
           </div>
           <div class="col d-flex justify-content-around"><!--按鈕-->
             <button type="button" class=" border-0 bg-white btn-sm" @click="toggleTimeRunning"><img src="../assets/img/start.svg" alt="start"></button>
-             <button  type="button" class=" border-0 bg-white btn-sm" @click="toggleTimeStop"><img src="../assets/img/pause.svg" alt="stop"></button>
+            <button  type="button" class=" border-0 bg-white btn-sm" @click="toggleTimeStop"><img src="../assets/img/pause.svg" alt="stop"></button>
           </div>
         </div>
       </div>
@@ -87,12 +87,11 @@ export default {
               this.localData = deleteArr;
               localStorage.setItem('quest', JSON.stringify(this.localData));
               this.showAlert();
+              this.currentData.name = '無任務';
               clearInterval(this.content);
             }
           }, 1000);
         }
-      } else {
-        alert('時間不能為0');
       }
     },
     toggleTimeStop () {

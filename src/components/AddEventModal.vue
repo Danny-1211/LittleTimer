@@ -32,7 +32,9 @@
 
 <script>
 import Modal from 'bootstrap/js/dist/modal.js';
+import timeCantZero from '@/utils/timeCantZero.js';
 export default {
+  mixins: [timeCantZero],
   emits: ['AddEvent'],
   data () {
     return {
@@ -44,14 +46,17 @@ export default {
   },
   methods: {
     addEvent () {
-      const data = { // 將輸入值放成一個物件
-        name: this.addTaskName,
-        content: this.addTaskContent,
-        time: this.addTime
-      };
-      console.log(data);
-      this.$emit('add-event', data);
-      this.hideModal();
+      if (this.addTime !== 0) {
+        const data = { // 將輸入值放成一個物件
+          name: this.addTaskName,
+          content: this.addTaskContent,
+          time: this.addTime
+        };
+        this.$emit('add-event', data);
+        this.hideModal();
+      } else {
+        this.invalidAlert();
+      }
     },
     showModal () {
       this.myModal.show();

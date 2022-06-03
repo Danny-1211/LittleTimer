@@ -35,7 +35,9 @@
 
 <script>
 import AddEventModal from '@/components/AddEventModal';
+import editSuccess from '@/utils/editSuccess.js';
 export default {
+  mixins: [editSuccess],
   components: {
     AddEventModal
   },
@@ -74,6 +76,7 @@ export default {
       });
       localStorage.removeItem('quest');
       localStorage.setItem('quest', JSON.stringify(this.dataArr));
+      this.editAlert();
     },
     openModal () {
       this.$refs.addModal.showModal();
