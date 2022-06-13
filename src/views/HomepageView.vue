@@ -115,7 +115,6 @@ export default {
         title: `${infor}`,
         confirmButtonColor: '#E43F6F'
       });
-      console.log(this.currentData);
     }
   },
   mounted () {
