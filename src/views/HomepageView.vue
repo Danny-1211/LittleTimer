@@ -20,12 +20,17 @@
       </div>
       <div class="col-sm-5 border rounded-3 bg-light py-2">
         <h3 class="font-family-today text-dark px-2">Today</h3> <!--今天標題-->
-        <ul class="list-group rounded-3" v-for="item in localData" :key="item.name + '123123'">  <!--任務清單-->
-          <li class="list-group-item border-bottom border-light border-3 d-flex justify-content-between">
-            <div class=" font-family-list text-dark p-2" @click="showInfor(item.name)">{{ item.name }}</div> <!--跑不出物件任務名稱-->
-            <div class=" btn btn-warning text-dark p-2">任務內容</div>
-          </li>
-        </ul>
+        <template v-if="localData.length !== 0">
+          <ul class="list-group rounded-3" v-for="item in localData" :key="item.name + '123123'">  <!--任務清單-->
+            <li class="list-group-item border-bottom border-light border-3 d-flex justify-content-between">
+              <div class=" font-family-list text-dark p-2" @click="showInfor(item.name)">{{ item.name }}</div> <!--跑不出物件任務名稱-->
+              <div class=" btn btn-warning text-dark p-2" @click="toggleTaskInfor(item.name)">任務內容</div>
+            </li>
+          </ul>
+        </template>
+        <div v-else class="d-flex justify-content-center align-items-center py-5 mt-5">
+          <p class="font-family-task text-dark">今天無任務</p>
+        </div>
       </div>
     </div>
   </div>
@@ -50,7 +55,7 @@ export default {
     showInfor (name) {
       this.localData.forEach(item => {
         if (item.name === name) {
-          this.currentData = item;
+          this.currentData = { ...item };
         }
       });
       this.timer = this.currentData.time;
@@ -98,6 +103,19 @@ export default {
       this.isClockRunning = false;
       this.timer = this.remainTime;
       clearInterval(this.content);
+    },
+    toggleTaskInfor (name) {
+      let infor = '';
+      this.localData.forEach(item => {
+        if (item.name === name) {
+          infor = item.content;
+        }
+      });
+      this.$swal.fire({
+        title: `${infor}`,
+        confirmButtonColor: '#E43F6F'
+      });
+      console.log(this.currentData);
     }
   },
   mounted () {
